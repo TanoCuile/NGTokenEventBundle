@@ -11,12 +11,12 @@ _token_event:
 
 
 #Declaration custom event
-,,,
+``` php
 // ...
 use NG\TokenEventBundle\TokenEvent\TokenEventInterface;
 
 class TokenEventCustom implements TokenEventInterface [TokenEventResponsableInterface/* Mark your event if it must return Response object */]
-,,,
+``` php
 Declare as service
 
 ,,,
@@ -27,7 +27,7 @@ Declare as service
 ,,,
 
 #Using TokenEvent
-,,,
+``` php
 // ...
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController,
     Symfony\Component\HttpFoundation\Response,
@@ -73,6 +73,6 @@ class CustomController extends BaseController
     $manager->saveEvent($event);
   }
 }
-,,,
+``` php
 
 If you have any problems, you have a suggestion for improving Bundle - will be happy to listen.
