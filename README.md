@@ -4,11 +4,11 @@ NGTokenEventBundle for Symfony 2.*
 Allows you to create an auto-executable actions available on a unique token.
 
 #Configure routing.yml
-
+``` js
 _token_event:
     resource: '@NGTokenEventBundle/Resources/config/routing/routing.php'
     prefix: /
-
+```
 
 #Declaration custom event
 ``` php
@@ -16,15 +16,15 @@ _token_event:
 use NG\TokenEventBundle\TokenEvent\TokenEventInterface;
 
 class TokenEventCustom implements TokenEventInterface [TokenEventResponsableInterface/* Mark your event if it must return Response object */]
-``` php
+``` 
 Declare as service
 
-,,,
+``` xml
 <service id="token_event.custom" class="Path\To\Your\TokenEvent\TokenEventCustom">
   <!--- Any arguments -->
   <tag name="token_event.type" />
 </service>
-,,,
+```
 
 #Using TokenEvent
 ``` php
@@ -73,6 +73,6 @@ class CustomController extends BaseController
     $manager->saveEvent($event);
   }
 }
-``` php
+```
 
 If you have any problems, you have a suggestion for improving Bundle - will be happy to listen.
