@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * This file is part of the NGTokentEventBundle package
+ *
+ * (c) Shvets Serhiy <strifinder@gmail.com>
+ *
+ * For the full copyring and license information, please view the LICENSE
+ * file that was distributed with this source code
+ */
+
+namespace NG\TokenEventBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM,
+    Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity,
+    Symfony\Component\DependencyInjection\ContainerInterface,
+    Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * SPS\Bundles\HomeBundle\Entity\Answer
+ *
+ * @ORM\Table(name="token_events")
+ * @ORM\Entity(repositoryClass="NG\TokenEventBundle\Entity\TokenEventRepository")
+ */
+class TokenEvent
+{
+  /**
+   * @var integer $id
+   *
+   * @ORM\Column(name="id", type="integer")
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
+  private $id;
+  
+  /**
+   * @var string $token
+   *
+   * @ORM\Column(name="token", type="string", length=255)
+   * @Assert\MaxLength(255)
+   */
+  private $token;
+  
+  /**
+   * @var string $actions
+   *
+   * @ORM\Column(name="actions", type="text")
+   */
+  private $actions;
+  
+  /**
+   * @var string $toTime
+   *
+   * @ORM\Column(name="to_time", type="datetime", nullable=true)
+   * @Assert\DateTime()
+   */
+  private $toTime;
+  
+  /**
+   * @var string $ip
+   * 
+   * @ORM\Column(name="ip", type="string", length=32, nullable=true)
+   * @Assert\Ip(version="all")
+   */
+  private $ip;
+  
+  /**
+   * @var integer $countUsed
+   *
+   * @ORM\Column(name="count_used", type="integer")
+   */
+  private $countUsed = 0;
+  
+  /**
+   * @var integer $maxCount
+   *
+   * @ORM\Column(name="max_count", type="integer", nullable=true)
+   */
+  private $maxCount = NULL;
+  
+  /**
+   * @var bool $blocked
+   *
+   * @ORM\Column(name="blocked", type="boolean")
+   */
+  private $blocked = FALSE;
+  
+  /**
+   * Get id
+   *
+   * @return integer 
+   */
+  public function getId()
+  {
+      return $this->id;
+  }
+}

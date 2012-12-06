@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+      <service id="token_event.login" class="NG\TokenEventBundle\TokenEvent\TokenEventLogin">
+        <argument type="service" id="service_container" />
+        <argument>main</argument>
+        <tag name="token_event.type" />
+      </service>
+      
+      <service id="token_event.forward" class="NG\TokenEventBundle\TokenEvent\TokenEventForward">
+        <argument type="service" id="service_container" />
+        <tag name="token_event.type" />
+      </service>
+      
+      <service id="token_event.event_manager" class="NG\TokenEventBundle\TokenEventManager\TokenEventManager">
+        <argument type="service" id="service_container" />
+      </service>
+      
+      <service id="token_event.event_bag" class="NG\TokenEventBundle\Component\TokenEventBag\TokenEventBag">
+        <argument type="service" id="service_container" />
+      </service>
+    </services>
+</container>

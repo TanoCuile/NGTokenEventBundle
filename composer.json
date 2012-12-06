@@ -1,0 +1,22 @@
+{ 
+  "name": "ng/token-event-bundle",
+  "description": "Allows you to create an auto-executable actions available on a unique token.",
+  "keywords": ["token", "token event", "event", "action", "token action"],
+  "homepage": "",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Shvets Serhiy",
+      "email": "strifinder@gmail.com"
+    }
+  ],
+  
+  "require": {
+    "php": ">=5.3.4"
+  },
+  
+  "autoload": {
+    "psr-0": {"NG\\TokenEventBundle":"src/"}
+  }
+}
