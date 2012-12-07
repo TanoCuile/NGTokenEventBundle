@@ -13,6 +13,9 @@ namespace NG\TokenEventBundle\Collection;
 
 use NG\TokenEventBundle\TokenEvent\TokenEventInterface;
 
+/**
+ * Collection for TokenEvents
+ */
 class Collection implements CollectionInterface
 {  
   // Array of TokenEventInterface

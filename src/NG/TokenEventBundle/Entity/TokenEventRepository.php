@@ -13,6 +13,9 @@ namespace NG\TokenEventBundle\Entity;
 
 use Doctrine\ORM\EntityRepository as BaseRepository;
 
+/**
+ * Repository for TokenEvent
+ */
 class TokenEventRepository extends BaseRepository
 {
   /**

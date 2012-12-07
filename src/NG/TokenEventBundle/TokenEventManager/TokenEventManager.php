@@ -17,6 +17,9 @@ use NG\TokenEventBundle\TokenEvent\TokenEventInterface,
     NG\TokenEventBundle\TokenEvent\TokenEventResponsableInterface,
     Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class-manager fot TokenEvent
+ */
 class TokenEventManager implements TokenEventManagerInterface
 {
   //ContainerInterface
@@ -32,9 +35,7 @@ class TokenEventManager implements TokenEventManagerInterface
   }
   
   /**
-   * Save TokenEvent
-   *
-   * @param TokenEvent $event
+   * @{inerhitDoc}
    */
   public function saveEvent(TokenEvent $event)
   {
@@ -54,13 +55,7 @@ class TokenEventManager implements TokenEventManagerInterface
   }  
   
   /**
-   * Get empty TokeEvent shape
-   *
-   * @param string $event_id 
-   *
-   * @return TokenEventInterface
-   *
-   * @throws \InvalidArgumentException
+   * @{inerhitDoc}
    */
   public function getEmptyEvent($event_id)
   {
@@ -71,11 +66,7 @@ class TokenEventManager implements TokenEventManagerInterface
   }
   
   /**
-   * Validate event
-   *
-   * @param TotenEvent $event
-   *
-   * @throws TokenEventException
+   * @{inerhitDoc}
    */
   public function validateEvent(TokenEvent $event)
   {
@@ -105,9 +96,7 @@ class TokenEventManager implements TokenEventManagerInterface
   }
   
   /**
-   * Execute event
-   *
-   * @param TokenEvent
+   * @{inerhitDoc}
    */
   public function executeEvent(TokenEvent $event)
   {    
@@ -140,9 +129,7 @@ class TokenEventManager implements TokenEventManagerInterface
   }
   
   /**
-   * Get Event by Token
-   *
-   * @param string $token
+   * @{inerhitDoc}
    */
   public function getEvent($token)
   {

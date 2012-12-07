@@ -13,6 +13,9 @@ namespace NG\TokenEventBundle\Collection;
 
 use NG\TokenEventBundle\TokenEvent\TokenEventInterface;
 
+/**
+ * Interface for Collection
+ */
 interface CollectionInterface extends \Iterator
 {
   /**

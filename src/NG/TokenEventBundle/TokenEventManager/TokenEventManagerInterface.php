@@ -16,7 +16,7 @@ use NG\TokenEventBundle\TokenEvent\TokenEventInterface,
     NG\TokenEventBundle\Component\TokenEventFactory\TokenEventFactory;
 
 /**
- * 
+ * Interface for TokenEventManager
  */
 interface TokenEventManagerInterface
 {
@@ -32,5 +32,32 @@ interface TokenEventManagerInterface
    *
    * @param string $token
    */
-  public function getEvent($token);  
+  public function getEvent($token);
+  
+  /**
+   * Execute event
+   *
+   * @param TokenEvent
+   */
+  public function executeEvent(TokenEvent $event);
+  
+  /**
+   * Get empty TokeEvent shape
+   *
+   * @param string $event_id 
+   *
+   * @return TokenEventInterface
+   *
+   * @throws \InvalidArgumentException
+   */
+  public function getEmptyEvent($event_id);
+  
+  /**
+   * Validate event
+   *
+   * @param TotenEvent $event
+   *
+   * @throws TokenEventException
+   */
+  public function validateEvent(TokenEvent $event);
 }

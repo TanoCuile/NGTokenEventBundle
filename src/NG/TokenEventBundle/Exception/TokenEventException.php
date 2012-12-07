@@ -11,6 +11,9 @@
 
 namespace NG\TokenEventBundle\Exception;
 
+/**
+ * Exception for TokenEvent validation
+ */
 class TokenEventException extends \RuntimeException
 {
   

@@ -13,7 +13,12 @@ namespace NG\TokenEventBundle\TokenEvent;
 
 use Symfony\Component\Security\Core\User\AdvancedUserInterface,
     Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-
+    
+/**
+ * Executing of this event login user
+ *
+ * Require: FOSUserBundle
+ */
 class TokenEventLogin extends AbstractTokenEvent
 {    
   // User id
@@ -29,6 +34,9 @@ class TokenEventLogin extends AbstractTokenEvent
    */
   public function __construct($container, $firewall)
   {
+    if (!$container->get('kernel')->isClassInActiveBundle('FOS\\UserBundle\\FOSUserBundle')) {
+      throw new \RuntimeException('For using this event, you must install FOSUserBundle.');
+    }
     $this->container = $container;
     
     $this->firewall = $firewall;

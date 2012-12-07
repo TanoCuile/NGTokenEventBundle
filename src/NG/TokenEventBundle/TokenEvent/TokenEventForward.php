@@ -13,6 +13,11 @@ namespace NG\TokenEventBundle\TokenEvent;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * Executing of this event redirect user to another page
+ *
+ * Event retust RequestResposse
+ */
 class TokenEventForward extends AbstractTokenEvent implements TokenEventResponsableInterface
 {
   // Routing
@@ -20,6 +25,25 @@ class TokenEventForward extends AbstractTokenEvent implements TokenEventResponsa
   
   // Router parameters
   protected $parameters = array();
+  
+  /**
+   * Check router
+   *
+   * @param string $router
+   * 
+   * @return bool
+   */
+  public function checkRouter($router)
+  {
+    $collection = $this->container->get('router')->getRouteCollection()->all();
+    
+    foreach ($collection as $name => $val) {
+      if ($name == $router) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
   
   /**
    * Set router
@@ -30,6 +54,9 @@ class TokenEventForward extends AbstractTokenEvent implements TokenEventResponsa
    */
   public function setRouter($router)
   {
+    if ($this->container && !$this->checkRouter($router)){
+      throw new \RuntimeException('You have not router: ' . $router . '.');
+    }
     $this->router = $router;
     
     return $this;

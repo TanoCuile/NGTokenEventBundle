@@ -16,7 +16,7 @@ use NG\TokenEventBundle\Component\EventParameter\EventParameterInterface,
     Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Interface for token events
+ * Abstract class for token events
  */
 abstract class AbstractTokenEvent implements TokenEventInterface
 {
