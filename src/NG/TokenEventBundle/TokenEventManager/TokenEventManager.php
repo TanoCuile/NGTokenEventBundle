@@ -100,7 +100,10 @@ class TokenEventManager implements TokenEventManagerInterface
     // Update token before call
     $em = $this->container->get('doctrine')->getEntityManager();
     
-    $token->setCountUsed($token->getCountUsed() + 1);
+    $token
+        ->setCountUsed($token->getCountUsed() + 1)
+        ->setLastUsed(new \DateTime());
+    
     $em->flush($token);
     
     // Get token events
