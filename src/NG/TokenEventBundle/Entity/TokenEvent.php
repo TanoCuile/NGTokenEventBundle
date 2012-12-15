@@ -4,6 +4,7 @@
  * This file is part of the NGTokentEventBundle package
  *
  * (c) Shvets Serhiy <strifinder@gmail.com>
+ *     Zhuk Vitaliy <zhuk2205@gmail.com>
  *
  * For the full copyring and license information, please view the LICENSE
  * file that was distributed with this source code
@@ -14,99 +15,67 @@ namespace NG\TokenEventBundle\Entity;
 use Doctrine\ORM\Mapping as ORM,
     Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity,
     Symfony\Component\DependencyInjection\ContainerInterface,
-    Symfony\Component\Validator\Constraints as Assert,
-    NG\TokenEventBundle\Collection\Collection,
-    NG\TokenEventBundle\TokenEvent\TokenEventInterface;
+    NG\TokenEventBundle\Events\EventInterface,
+    NG\TokenEventBundle\Events\EventsBagInterface;
 
 /**
  * SPS\Bundles\HomeBundle\Entity\Answer
  *
  * @ORM\Table(name="token_events")
- * @ORM\Entity(repositoryClass="NG\TokenEventBundle\Entity\TokenEventRepository")
- * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields="token")
+ * @ORM\Entity()
  */
 class TokenEvent
 {
   /**
-   * @var integer $id
-   *
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
-  
-  /**
    * @var string $token
-   *
+   * 
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="NONE")
    * @ORM\Column(name="token", type="string", length=255)
-   * @Assert\MaxLength(255)
    */
-  private $token;
+  protected $token;
   
   /**
    * @var string $actions
    *
-   * @ORM\Column(name="actions", type="text")
+   * @ORM\Column(name="events", type="object")
    */
-  private $actions;
+  protected $events;
   
   /**
    * @var string $toTime
    *
    * @ORM\Column(name="to_time", type="datetime", nullable=true)
-   * @Assert\DateTime()
    */
-  private $toTime;
+  protected $toTime;
   
   /**
    * @var string $ip
    * 
    * @ORM\Column(name="ip", type="string", length=32, nullable=true)
-   * @Assert\Ip(version="all")
    */
-  private $ip;
+  protected $ip;
   
   /**
    * @var integer $countUsed
    *
    * @ORM\Column(name="count_used", type="integer")
    */
-  private $countUsed = 0;
+  protected $countUsed = 0;
   
   /**
    * @var integer $maxCount
    *
-   * @ORM\Column(name="max_count", type="integer", nullable=true)
+   * @ORM\Column(name="max_count_usage", type="integer")
    */
-  private $maxCount = NULL;
+  protected $maxCountUsage = 0;
     
   /**
    * @var bool $blocked
    *
    * @ORM\Column(name="blocked", type="boolean")
    */
-  private $blocked = FALSE;
-  
-  /**
-   * Construct object
-   */
-  public function __construct ()
-  {
-    $this->actions = new Collection();
-  }
-  
-
-  /**
-   * Get id
-   *
-   * @return integer 
-   */
-  public function getId()
-  {
-      return $this->id;
-  }
+  protected $blocked = FALSE;
 
   /**
    * Set token
@@ -116,9 +85,9 @@ class TokenEvent
    */
   public function setToken($token)
   {
-      $this->token = $token;
-  
-      return $this;
+    $this->token = $token;
+
+    return $this;
   }
   
   /**
@@ -128,7 +97,7 @@ class TokenEvent
    */
   public function getToken()
   {
-      return $this->token;
+    return $this->token;
   }
   
   /**
@@ -137,11 +106,11 @@ class TokenEvent
    * @param \DateTime $toTime
    * @return TokenEvent
    */
-  public function setToTime($toTime)
+  public function setToTime(\DateTime $toTime)
   {
-      $this->toTime = $toTime;
-  
-      return $this;
+    $this->toTime = $toTime;
+
+    return $this;
   }
   
   /**
@@ -185,7 +154,7 @@ class TokenEvent
    */
   public function setCountUsed($countUsed)
   {
-      $this->countUsed = $countUsed;
+      $this->countUsed = (int) $countUsed;
   
       return $this;
   }
@@ -203,12 +172,12 @@ class TokenEvent
   /**
    * Set maxCount
    *
-   * @param integer $maxCount
+   * @param integer $maxCountUsage
    * @return TokenEvent
    */
-  public function setMaxCount($maxCount)
+  public function setMaxCountUsage($maxCountUsage)
   {
-      $this->maxCount = $maxCount;
+      $this->maxCountUsage = (int) $maxCountUsage;
   
       return $this;
   }
@@ -218,9 +187,9 @@ class TokenEvent
    *
    * @return integer 
    */
-  public function getMaxCount()
+  public function getMaxCountUsage()
   {
-      return $this->maxCount;
+      return $this->maxCountUsage;
   }
   
   /**
@@ -231,7 +200,7 @@ class TokenEvent
    */
   public function setBlocked($blocked)
   {
-      $this->blocked = $blocked;
+      $this->blocked = (bool) $blocked;
   
       return $this;
   }
@@ -249,13 +218,13 @@ class TokenEvent
   /**
    * Set actions
    *
-   * @param string $actions
+   * @param EventsBagInterface $actions
    * @return TokenEvent
    */
-  public function setActions($actions)
+  public function setEvents(EventsBagInterface $events)
   {
-      $this->actions = $actions;
-  
+      $this->events = $events;
+      
       return $this;
   }
   
@@ -264,9 +233,9 @@ class TokenEvent
    *
    * @return string 
    */
-  public function getActions()
+  public function getEvents()
   {
-      return $this->actions;
+      return $this->events;
   }
   
   /**
@@ -276,39 +245,10 @@ class TokenEvent
    *
    * @return TokenEvent
    */
-  public function addAction(TokenEventInterface $event)
+  public function addEvent(EventInterface $event)
   {
-    $this->actions->add($event);
+    $this->events->add($event);
     
     return $this;
   }
-   
-  
-  /*******
-   * LifeCycles
-   *******/
-  
-  /**
-   * @ORM\PostLoad
-   */
-  public function postLoad()
-  {
-    $this->actions = unserialize(base64_decode($this->actions));
-  }
-  
-  /**
-   * @ORM\PrePersist
-   */
-  public function prePersist()
-  {
-    $this->actions = base64_encode(serialize($this->actions));
-  }
-  
-  /**
-   * @ORM\PreUpdate
-   */
-  public function preUpdate()
-  {
-    $this->actions = base64_encode(serialize($this->actions));
-  }  
 }
