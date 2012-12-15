@@ -16,7 +16,8 @@ use Doctrine\ORM\Mapping as ORM,
     Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity,
     Symfony\Component\DependencyInjection\ContainerInterface,
     NG\TokenEventBundle\Events\EventInterface,
-    NG\TokenEventBundle\Events\EventsBagInterface;
+    NG\TokenEventBundle\Events\EventsBagInterface,
+    NG\TokenEventBundle\Events\EventsBag;
 
 /**
  * SPS\Bundles\HomeBundle\Entity\Answer
@@ -71,12 +72,25 @@ class TokenEvent
   protected $maxCountUsage = 0;
     
   /**
+   * @ORM\Column(name="last_used", type="datetime", nullable=true)
+   */
+  protected $lastUsed = NULL;
+  
+  /**
    * @var bool $blocked
    *
    * @ORM\Column(name="blocked", type="boolean")
    */
   protected $blocked = FALSE;
-
+  
+  /**
+   * 
+   */
+  public function __construct()
+  {
+    $this->events = new EventsBag;
+  }
+  
   /**
    * Set token
    *
@@ -190,6 +204,27 @@ class TokenEvent
   public function getMaxCountUsage()
   {
       return $this->maxCountUsage;
+  }
+  
+  /**
+   * Set last use
+   *
+   * @param \DateTime $lastUsed
+   */
+  public function setLastUsed(\DateTime $lastUsed)
+  {
+    $this->lastUsed = $lastUsed;
+    return $this;
+  }
+  
+  /**
+   * Get last use
+   *
+   * @return \DateTime
+   */
+  public function getLastUsed()
+  {
+    return $this->lastUsed;
   }
   
   /**
