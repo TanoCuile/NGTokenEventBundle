@@ -2,25 +2,29 @@
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+    
+    <parameters>
+      <parameter key="ng_token_event.event.forward.class">NG\TokenEventBundle\Events\ForwardEvent</parameter>
+      <parameter key="ng_token_event.event.login.class">NG\TokenEventBundle\Events\LoginEvent</parameter>
+    </parameters>
+    
     <services>
-      <service id="token_event.login" class="NG\TokenEventBundle\TokenEvent\TokenEventLogin">
-        <argument type="service" id="service_container" />
-        <argument>main</argument>
-        <tag name="token_event.type" />
-      </service>
-      
-      <service id="token_event.forward" class="NG\TokenEventBundle\TokenEvent\TokenEventForward">
-        <argument type="service" id="service_container" />
-        <tag name="token_event.type" />
-      </service>
-      
-      <service id="token_event.event_manager" class="NG\TokenEventBundle\TokenEventManager\TokenEventManager">
+      <service id="ng_token_event.event_listener" class="NG\TokenEventBundle\EventListener\TokenEventListener">
+        <tag name="doctrine.event_listener" event="prePersist" />
+        <tag name="doctrine.event_listener" event="postLoad" />
         <argument type="service" id="service_container" />
       </service>
       
-      <service id="token_event.event_bag" class="NG\TokenEventBundle\Component\TokenEventBag\TokenEventBag">
+      <service id="ng_token_event.event_manager" class="NG\TokenEventBundle\TokenEventManager\TokenEventManager">
         <argument type="service" id="service_container" />
+      </service>
+      
+      <service id="ng_token_event.event.forward" class="%ng_token_event.event.forward.class%">
+        <tag name="ng_token_event.event" />
+      </service>
+      
+      <service id="ng_token_event.event.login" class="%ng_token_event.event.login.class%">
+        <tag name="ng_token_event.event" />
       </service>
     </services>
 </container>
