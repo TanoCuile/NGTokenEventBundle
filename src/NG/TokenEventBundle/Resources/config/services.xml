@@ -6,6 +6,7 @@
     <parameters>
       <parameter key="ng_token_event.event.forward.class">NG\TokenEventBundle\Events\ForwardEvent</parameter>
       <parameter key="ng_token_event.event.login.class">NG\TokenEventBundle\Events\LoginEvent</parameter>
+      <parameter key="ng_token_event.event.forward_request.class">NG\TokenEventBundle\Events\ForwardRequestEvent</parameter>
     </parameters>
     
     <services>
@@ -20,6 +21,10 @@
       </service>
       
       <service id="ng_token_event.event.forward" class="%ng_token_event.event.forward.class%">
+        <tag name="ng_token_event.event" />
+      </service>
+      
+      <service id="ng_token_event.event.forward_request" class="%ng_token_event.event.forward_request.class%">
         <tag name="ng_token_event.event" />
       </service>
       
